@@ -1,7 +1,7 @@
 # Triple Diffie-Hellman (3-DH) Protocol Simulation
 
-This project is part of the practical coursework for the **Network Security course** in the Master’s program in **
-Engineering and Computer Science** at the **University of Verona**.
+This project is part of the practical coursework for the **Network Security course** in the Master’s program in
+**Engineering and Computer Science** at the **University of Verona**.
 
 This project simulates communication between a Python Client and Server that use the **Triple Diffie-Hellman (3-DH)**
 protocol to securely establish a shared key.
