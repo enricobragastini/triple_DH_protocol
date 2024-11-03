@@ -40,7 +40,7 @@ The 3-DH Protocol works as follows:
 
 ## Requirements
 
-- `cryptography` library for encryption.
+- `pycryptodome` library for encryption.
 
 ## Note on Security
 
