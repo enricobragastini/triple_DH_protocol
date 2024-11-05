@@ -32,18 +32,19 @@ if __name__ == "__main__":
     remote_ldh_public = int.from_bytes(s.recv(BYTES), 'big')
     remote_edh_public = int.from_bytes(s.recv(BYTES), 'big')
     print(f"Parametri ricevuti: p={p}, g={g}")
-    print(f"Chiavi ricevute: LDH={remote_ldh_public}, EDH={remote_edh_public}")
 
     # Generazione delle chiavi
     ldh_private, ldh_public = generate_keys(p, g)
     edh_private, edh_public = generate_keys(p, g)
     ldh = (ldh_private, ldh_public)
     edh = (edh_private, edh_public)
-    print(f"Chiavi generate: LDH={ldh}, EDH={edh}")
 
     # Invio delle chiavi
     s.sendall(ldh_public.to_bytes(BYTES, 'big'))
     s.sendall(edh_public.to_bytes(BYTES, 'big'))
+
+    print(
+        f"\nChiavi: \n\tLDH={ldh}\n\tEDH={edh}\n\tRemote LDH={remote_ldh_public}\n\tRemote EDH={remote_edh_public}\n")
 
     # Calcolo delle chiavi condivise
     shared_secret = calculate_shared_secret(edh_private, ldh_private, remote_edh_public, remote_ldh_public)
@@ -52,6 +53,9 @@ if __name__ == "__main__":
     # Invio di un messaggio cifrato con AES-GCM
     plaintext = b"Hello World! This is a encrypted message from Client to Server!"
     nonce, tag, ciphertext = encrypt(plaintext, shared_secret)
+
+    print(f"\nCifro il messaggio '{plaintext.decode()}' con AES-GCM usando la chiave condivisa...")
+    print(f"\nNonce: {nonce}\nTag: {tag}\nCiphertext: {ciphertext}")
     s.sendall(nonce + tag + ciphertext)
 
     # Chiusura del socket

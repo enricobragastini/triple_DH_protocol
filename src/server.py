@@ -58,7 +58,6 @@ if __name__ == "__main__":
 
             ldh = (ldh_private, ldh_public)
             edh = (edh_private, edh_public)
-            print(f"Chiavi generate: LDH={ldh}, EDH={edh}")
 
             # Invio dei parametri e delle chiavi al client
             conn.sendall(p.to_bytes(BYTES, 'big'))
@@ -69,6 +68,9 @@ if __name__ == "__main__":
             # Ricezione delle chiavi da parte del client
             remote_ldh_public = int.from_bytes(conn.recv(BYTES), 'big')
             remote_edh_public = int.from_bytes(conn.recv(BYTES), 'big')
+
+            print(
+                f"\nChiavi: \n\tLDH={ldh}\n\tEDH={edh}\n\tRemote LDH={remote_ldh_public}\n\tRemote EDH={remote_edh_public}\n")
 
             # Calcolo delle chiavi condivise
             shared_secret = calculate_shared_secret(edh_private, ldh_private, remote_edh_public, remote_ldh_public)
@@ -86,4 +88,4 @@ if __name__ == "__main__":
 
         finally:
             conn.close()
-            print("Connessione chiusa.")
+            print("\nConnessione chiusa.\nRimango in ascolto per una nuova connessione...\n")

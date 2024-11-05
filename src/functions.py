@@ -39,8 +39,19 @@ def generate_parameters() -> tuple:
             if is_prime(p):
                 return p
 
-    p = generate_prime()        # Numero primo di 8 bit
-    g = 2                       # Generatore (sound, not secure)
+    def generate_generator(p: int) -> int:
+        """
+        Genera un generatore per il numero primo p
+        :param p: Numero primo
+        :return: Generatore
+        """
+        while True:
+            g = random.randint(2, p - 1)
+            if pow(g, (p - 1) // 2, p) != 1:
+                return g
+
+    p = generate_prime()            # Numero primo di 8 bit
+    g = generate_generator(p)       # Generatore
     return p, g
 
 
