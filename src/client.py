@@ -35,7 +35,8 @@ if __name__ == "__main__":
     print(f"Chiavi ricevute: LDH={remote_ldh_public}, EDH={remote_edh_public}")
 
     # Generazione delle chiavi
-    ldh_private, edh_private, ldh_public, edh_public = generate_keys(p, g)
+    ldh_private, ldh_public = generate_keys(p, g)
+    edh_private, edh_public = generate_keys(p, g)
     ldh = (ldh_private, ldh_public)
     edh = (edh_private, edh_public)
     print(f"Chiavi generate: LDH={ldh}, EDH={edh}")

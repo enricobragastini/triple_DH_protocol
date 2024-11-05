@@ -50,14 +50,12 @@ def generate_keys(p, g):
     """
 
     # Chiavi private -> interi casuali di 4 byte
-    ldh_private = int.from_bytes(random.getrandbits(BYTES * 8).to_bytes(BYTES, 'big'), 'big') % int(p)
-    edh_private = int.from_bytes(random.getrandbits(BYTES * 8).to_bytes(BYTES, 'big'), 'big') % int(p)
+    private_key = random.randint(1, p - 1)
 
     # Chiavi pubbliche -> g^private mod p
-    ldh_public = pow(g, ldh_private, p)
-    edh_public = pow(g, edh_private, p)
+    public_key = pow(g, private_key, p)
 
-    return ldh_private, edh_private, ldh_public, edh_public
+    return private_key, public_key
 
 
 def encrypt(plaintext, secret):

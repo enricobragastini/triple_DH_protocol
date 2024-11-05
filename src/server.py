@@ -36,6 +36,9 @@ if __name__ == "__main__":
     p, g = generate_parameters()
     print(f"Parametri generati: p={p}, g={g}")
 
+    # Generazione della coppia di chiavi long-term
+    ldh_private, ldh_public = generate_keys(p, g)
+
     # Creazione del socket
     PORT = 12345
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -50,8 +53,9 @@ if __name__ == "__main__":
             conn, addr = s.accept()
             print("\nRicevuta connessione da ", addr)
 
-            # Generazione delle chiavi
-            ldh_private, edh_private, ldh_public, edh_public = generate_keys(p, g)
+            # Generazione della coppia di chiavi ephemeral
+            edh_private, edh_public = generate_keys(p, g)
+
             ldh = (ldh_private, ldh_public)
             edh = (edh_private, edh_public)
             print(f"Chiavi generate: LDH={ldh}, EDH={edh}")
